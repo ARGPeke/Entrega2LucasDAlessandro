@@ -15,8 +15,8 @@ const productosArray = [
     new Producto("4","leche","la serenisima","url",1600),
 ]
 
-let carrito = {}; // Objeto para almacenar los productos seleccionados
-let total = 0; // Variable para almacenar el total
+let carrito = {}; 
+let total = 0;
 
 let continuar = true;
 while (continuar) {
@@ -39,7 +39,6 @@ while (continuar) {
     continuar = confirm("¿Desea agregar otro producto al carrito?");
 }
 
-// Mostrar el carrito y el total
 let mensaje = "Carrito de compras:\n";
 for (let key in carrito) {
     let item = carrito[key];
