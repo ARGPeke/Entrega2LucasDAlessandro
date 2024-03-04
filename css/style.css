@@ -1,5 +1,75 @@
-*{
-    background-color: rgb(29, 29, 29);
-    color: white;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
+main {
+    max-width: 800px;
+    padding: 20px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1, h2 {
+    color: #fff;
+}
+
+.agregar, #boton-cuotas, #limpiar-carrito {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.agregar:hover, #boton-cuotas:hover, #limpiar-carrito:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+#total-carrito, #total-acumulado, #resultado-cuotas {
+    font-weight: bold;
+    color: #fff;
+    margin-top: 10px;
+}
+
+#cuotas-container {
+    margin-top: 20px;
+}
+
+#cuotas-container label {
+    margin-right: 10px;
+}
+
+#cuotas {
+    padding: 5px;
+    margin-right: 10px;
+    width: 50px;
+}
+
+#error-message {
+    color: red;
+    margin-top: 10px;
+}

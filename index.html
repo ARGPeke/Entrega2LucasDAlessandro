@@ -7,17 +7,30 @@
     <title>Javascript</title>
 </head>
 <body>
-<main>
-<h1>Productos a la venta </h1>
-<section>
-<li>
-    <ul>Pan: $1400</ul>
-    <ul>Arroz: $2000</ul>
-    <ul>Carne: $5000</ul>
-    <ul>Leche: $1600</ul>
-</li>
-</section>
-</main>
-<script src="./js/index.js"></script>
+    <main>
+        <h1>Productos a la venta</h1>
+        <section id="productos">
+            <ul>
+                <li><span>Pan: $1400</span><button class="agregar">+</button></li>
+                <li><span>Arroz: $2000</span><button class="agregar">+</button></li>
+                <li><span>Carne: $5000</span><button class="agregar">+</button></li>
+                <li><span>Leche: $1600</span><button class="agregar">+</button></li>
+            </ul>
+        </section>
+        <div id="carrito">
+            <h2>Carrito de compras</h2>
+            <ul id="lista-carrito"></ul>
+            <p id="total-carrito"></p>
+            <div id="cuotas-container">
+                <label for="cuotas">Ingrese la cantidad de cuotas:</label>
+                <input type="number" id="cuotas" name="cuotas" min="1" max="12">
+                <button id="boton-cuotas">Calcular Cuotas</button>
+                <button id="limpiar-carrito">Limpiar Carrito</button>
+            </div>
+            <p id="resultado-cuotas"></p>
+            <p id="total-acumulado"></p>
+        </div>
+    </main>
+    <script src="./js/index.js"></script>
 </body>
 </html>
