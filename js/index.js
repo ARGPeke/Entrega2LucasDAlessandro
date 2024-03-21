@@ -8,6 +8,8 @@ class Producto {
     }
 }
 
+
+
 const productosArray = [
     new Producto("1", "pan", "horneado", "url", 1400),
     new Producto("2", "arroz", "gallo", "url", 2000),
@@ -23,49 +25,61 @@ if (totalGuardado) {
     total = parseFloat(totalGuardado);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const listaCarrito = document.getElementById("lista-carrito");
-    const totalCarrito = document.getElementById("total-carrito");
-    const botonCuotas = document.getElementById("boton-cuotas");
-    const resultadoCuotas = document.getElementById("resultado-cuotas");
-    const inputCuotas = document.getElementById("cuotas");
-
-    const listaProductos = document.querySelectorAll("#productos li");
-    listaProductos.forEach(function(item, index) {
-        const botonAgregar = item.querySelector(".agregar");
-        const producto = productosArray[index];
-        botonAgregar.addEventListener("click", function() {
-            agregarAlCarrito(producto);
-        });
-    });
-
-    function agregarAlCarrito(producto) {
-        const cantidad = 1; 
-        if (carrito.hasOwnProperty(producto.id)) {
-            carrito[producto.id].cantidad += cantidad;
-        } else {
-            carrito[producto.id] = { producto: producto, cantidad: cantidad };
-        }
-        total += producto.precio * cantidad;
-        actualizarCarrito();
-        localStorage.setItem("totalCarrito", total.toString());
-    }
-
-    function actualizarCarrito() {
-        listaCarrito.innerHTML = "";
-        let carritoHTML = "";
-        for (let key in carrito) {
-            const item = carrito[key];
-            carritoHTML += `<li>${item.producto.nombre} x${item.cantidad}: $${item.producto.precio * item.cantidad}</li>`;
-        }
-        listaCarrito.innerHTML = carritoHTML;
-        totalCarrito.textContent = `Total: $${total.toFixed(2)}`;
-    }
-
+    document.addEventListener("DOMContentLoaded", function() {
+        const listaCarrito = document.getElementById("lista-carrito");
+        const totalCarrito = document.getElementById("total-carrito");
+        const botonCuotas = document.getElementById("boton-cuotas");
+        const resultadoCuotas = document.getElementById("resultado-cuotas");
+        const inputCuotas = document.getElementById("cuotas");
     
+        const carritoGuardado = localStorage.getItem("carrito");
+        if (carritoGuardado) {
+            carrito = JSON.parse(carritoGuardado);
+            for (let key in carrito) {
+                const item = carrito[key];
+                total += item.producto.precio * item.cantidad;
+            }
+            actualizarCarrito();
+        }
+    
+        const listaProductos = document.querySelectorAll("#productos li");
+        listaProductos.forEach(function(item, index) {
+            const botonAgregar = item.querySelector(".agregar");
+            const producto = productosArray[index];
+            botonAgregar.addEventListener("click", function() {
+                agregarAlCarrito(producto);
+                mostrarToast("Los productos se agregaron al carrito");
+            });
+        });
+    
+        function agregarAlCarrito(producto) {
+            const cantidad = 1; 
+            if (carrito.hasOwnProperty(producto.id)) {
+                carrito[producto.id].cantidad += cantidad;
+            } else {
+                carrito[producto.id] = { producto: producto, cantidad: cantidad };
+            }
+            total += producto.precio * cantidad;
+            actualizarCarrito();
+            localStorage.setItem("carrito", JSON.stringify(carrito)); 
+            localStorage.setItem("totalCarrito", total.toString()); 
+        }
+    
+        function actualizarCarrito() {
+            listaCarrito.innerHTML = "";
+            let carritoHTML = "";
+            for (let key in carrito) {
+                const item = carrito[key];
+                carritoHTML += `<li>${item.producto.nombre} x${item.cantidad}: $${item.producto.precio * item.cantidad}</li>`;
+            }
+            listaCarrito.innerHTML = carritoHTML;
+            totalCarrito.textContent = `Total: $${total.toFixed(2)}`;
+        }
+        
     const limpiarCarritoBtn = document.getElementById("limpiar-carrito");
     limpiarCarritoBtn.addEventListener("click", function() {
         limpiarCarrito();
+        mostrarToast("El carrito se ha limpiado");
     });
 
     function limpiarCarrito() {
@@ -86,9 +100,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if ([3, 6, 12].includes(cuotas)) {
             calcularCuotas(cuotas);
         } else {
-            resultadoCuotas.textContent = "ERROR: La cantidad de cuotas ingresadas no es válida.";
-        }
-    });
+            Swal.fire({
+                title: "La cantidad de cuotas seleccionadas es Incorrecta",
+                text: "Debe ingresar 3-6 o 12 cuotas",
+                icon: "error",                
+    })}
 
     function calcularCuotas(cuotas) {
         let mensaje = "";
@@ -105,4 +121,39 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         resultadoCuotas.textContent = mensaje;
     }
-});
+})
+
+function mostrarToast(mensaje) {
+    Toastify({
+        text: mensaje,
+        duration: 3000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stylebackground: "#007bff",
+        stopOnFocus: true
+    }).showToast();
+}
+
+const app = document.getElementById("app");
+
+const url ="https://jsonplaceholder.typicode.com/photos";
+
+fetch(url)
+     .then (response => response.json())
+     .then(data => {
+        console.log(data)
+        mostrarImagen(data);
+    });
+    
+     function mostrarImagen(data){
+        if (data.length > 0) {
+            const foto = data[0];
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <h2>${foto.id}</h2>
+            <img src="${foto.thumbnailUrl}">
+            `;
+            app.append(div)
+}
+}})
